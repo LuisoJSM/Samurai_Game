@@ -1,0 +1,99 @@
+* {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    /* Elimina márgenes y rellenos predeterminados y evita el desplazamiento horizontal */
+}
+
+body {
+    background: rgb(245, 9, 9);
+    background: -moz-linear-gradient(90deg, rgb(160, 75, 18) 0%, rgba(2, 0, 36, 1) 10%, rgb(83, 100, 121) 45%, rgb(16, 209, 81) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
+    background: -webkit-linear-gradient(90deg, rgb(44, 53, 207) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
+    background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
+    /* Fondo con degradado de colores */
+}
+
+#game {
+    background: url(assets/background/Plan\ 2.png);
+    width: 500px;
+    height: 200px;
+    border: 1px solid blue;
+    margin: 10px auto;
+    background-color: beige;
+    /* Contenedor del juego con una imagen de fondo */
+}
+
+#character {
+    background: url(assets/character/Run.png) repeat-x;
+    height: 128px;
+    width: 128px;
+    top: 72px;
+    position: relative;
+    background-position: 0;
+    /* Configuración del personaje con imagen y posición inicial */
+}
+
+@keyframes walk {
+    0% {
+        background-position: 0px;
+    }
+
+    100% {
+        background-position: -1280px;
+    }
+
+    /* Animación para mover la imagen del personaje y simular caminata */
+}
+
+.walking {
+    animation: walk 0.5s steps(10) infinite;
+    /* Asigna la animación de caminar */
+}
+
+@keyframes jump {
+    0% {
+        top: 72px;
+    }
+
+    30% {
+        top: 10px;
+    }
+
+    70% {
+        top: 10px;
+    }
+
+    100% {
+        top: 72px;
+    }
+
+    /* Animación de salto */
+}
+
+.jumping {
+    animation: jump 0.5s linear;
+    /* Aplica la animación de salto */
+}
+
+#block {
+    background-image: url(assets/objects/ice_rock2.png);
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 52px;
+    left: 500px;
+    animation: block 3s linear infinite;
+    /* Configuración del bloque y su animación de movimiento */
+}
+
+@keyframes block {
+    0% {
+        left: 500px;
+    }
+
+    100% {
+        left: -20px;
+    }
+
+    /* Animación que mueve el bloque de derecha a izquierda */
+}

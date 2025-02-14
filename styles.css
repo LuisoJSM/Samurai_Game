@@ -9,9 +9,9 @@
 body {
     background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh; /* Hace que el body ocupe toda la pantalla */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
 }
 
@@ -24,14 +24,13 @@ body {
     border: 1px solid blue;
 }
 
-
 /* Capa del cielo (fondo más lejano) */
 #sky {
     position: absolute;
     width: 100%;
     height: 100%;
     background: url("assets/background/Plan5.png") repeat-x;
-    background-size: 576px auto; /* Aseguramos que se repita perfectamente */
+    background-size: 576px auto;
     z-index: 1;
     animation: moveSky 20s linear infinite;
 }
@@ -61,18 +60,33 @@ body {
 
 /* Animaciones corregidas para que se repitan sin cortes */
 @keyframes moveSky {
-    from { background-position: 0px; }
-    to { background-position: -576px; }
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -576px;
+    }
 }
 
 @keyframes moveBackground {
-    from { background-position: 0px; }
-    to { background-position: -576px; }
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -576px;
+    }
 }
 
 @keyframes moveGround {
-    from { background-position: 0px; }
-    to { background-position: -576px; }
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -576px;
+    }
 }
 
 /* Configuración del personaje */
@@ -80,7 +94,7 @@ body {
     background: url("assets/character/Run.png") repeat-x;
     height: 128px;
     width: 128px;
-    top: 196px; /* Ajustamos la posición del personaje en el suelo */
+    top: 196px;
     position: relative;
     background-position: 0;
     z-index: 4;
@@ -88,28 +102,43 @@ body {
 
 /* Animación de caminar */
 @keyframes walk {
-    0% { background-position: 0px; }
-    100% { background-position: -1280px; }
+    0% {
+        background-position: 0px;
+    }
+
+    100% {
+        background-position: -1280px;
+    }
 }
 
 .walking {
     animation: walk 0.5s steps(10) infinite;
 }
 
-/* Animación de salto (ajustado para que el personaje salte más alto) */
+/* Animación de salto */
 @keyframes jump {
-    0% { top: 196px; }
-    30% { top: 90px; } /* El personaje ahora salta más alto */
-    70% { top: 90px; }
-    100% { top: 196px; }
+    0% {
+        top: 196px;
+    }
+
+    30% {
+        top: 90px;
+    }
+
+    70% {
+        top: 90px;
+    }
+
+    100% {
+        top: 196px;
+    }
 }
 
 .jumping {
     animation: jump 0.6s linear;
 }
 
-/* Bloque de obstáculo */
-/* El bloque empieza sin animación */
+/* Bloque de obstáculo - Animación original sin aleatoriedad */
 #block {
     width: 30px;
     height: 30px;
@@ -120,6 +149,7 @@ body {
     bottom: 5px;
     left: 576px;
     z-index: 6;
+    animation: block 3s linear infinite;
 }
 
 /* Sombra para el bloque */
@@ -134,12 +164,16 @@ body {
     border-radius: 5px;
 }
 
-/* Animación del bloque */
+/* Animación del bloque en movimiento */
 @keyframes block {
-    0% { left: 576px; }
-    100% { left: -20px; }
-}
+    0% {
+        left: 576px;
+    }
 
+    100% {
+        left: -20px;
+    }
+}
 
 /* Caja de puntuación encima del juego */
 #cajaPuntuacion {
@@ -156,10 +190,10 @@ body {
     font-weight: bold;
     color: black;
     position: absolute;
-    top: 250px; /* Se coloca en la parte superior */
+    top: 250px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10; /* Para que esté sobre el juego */
+    z-index: 10;
 }
 
 /* Pantalla de inicio con la imagen encima */
@@ -182,27 +216,27 @@ body {
 
 /* Imagen de la máscara */
 #mask {
-    width: 250px; /* Ajusta el tamaño según necesites */
+    width: 250px;
     height: auto;
     position: absolute;
     top: 15%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 21; /* Asegura que está encima de todo */
+    z-index: 21;
 }
 
-/* Botón estilo arcade - más grande y circular */
+/* Botón estilo arcade - Circular */
 #botonInicio {
     background: radial-gradient(circle, red 30%, darkred 90%);
     color: white;
-    font-size: 28px; /* Texto más grande */
+    font-size: 28px;
     padding: 15px;
     border: 4px solid black;
-    border-radius: 50%; /* Hace que sea completamente circular */
-    width: 150px; /* Tamaño del botón */
+    border-radius: 50%;
+    width: 150px;
     height: 150px;
     cursor: pointer;
-    margin-top: 180px; /* Espacio debajo de la máscara */
+    margin-top: 180px;
     transition: transform 0.2s, box-shadow 0.3s;
     font-weight: bold;
     text-transform: uppercase;
@@ -210,7 +244,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5); /* Efecto de sombra */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Efecto de presión en el botón */
@@ -223,4 +257,31 @@ body {
 #botonInicio:hover {
     box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.8);
     transform: scale(1.1);
+}
+
+/* Animación de la máscara */
+#mask {
+    width: 250px;
+    height: auto;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 21;
+    animation: maskFlotar 3s infinite ease-in-out;
+}
+
+/* Animación de movimiento suave arriba y abajo */
+@keyframes maskFlotar {
+    0% {
+        transform: translateX(-50%) translateY(0px);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(0px);
+    }
 }

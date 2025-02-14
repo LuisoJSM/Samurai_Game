@@ -1,99 +1,137 @@
+/* Reset de estilos básicos */
 * {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
-    /* Elimina márgenes y rellenos predeterminados y evita el desplazamiento horizontal */
 }
 
+/* Configuración del fondo del juego */
 body {
-    background: rgb(245, 9, 9);
-    background: -moz-linear-gradient(90deg, rgb(160, 75, 18) 0%, rgba(2, 0, 36, 1) 10%, rgb(83, 100, 121) 45%, rgb(16, 209, 81) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
-    background: -webkit-linear-gradient(90deg, rgb(44, 53, 207) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
     background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
-    /* Fondo con degradado de colores */
 }
 
+/* Contenedor del juego */
 #game {
-    background: url(assets/background/Plan\ 2.png);
-    width: 500px;
-    height: 200px;
-    border: 1px solid blue;
+    position: relative;
+    width: 576px;  /* Ajustado al tamaño de las imágenes */
+    height: 324px; /* Ajustado al tamaño de las imágenes */
     margin: 10px auto;
+    overflow: hidden;
+    border: 1px solid blue;
     background-color: beige;
-    /* Contenedor del juego con una imagen de fondo */
 }
 
+/* Capa del cielo (fondo más lejano) */
+#sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("assets/background/Plan5.png") repeat-x;
+    background-size: 576px auto; /* Aseguramos que se repita perfectamente */
+    z-index: 1;
+    animation: moveSky 20s linear infinite;
+}
+
+/* Capa de montañas */
+#background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("assets/background/Plan3.png") repeat-x;
+    background-size: 576px auto;
+    z-index: 2;
+    animation: moveBackground 10s linear infinite;
+}
+
+/* Capa del suelo */
+#ground {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("assets/background/Plan1.png") repeat-x;
+    background-size: 576px auto;
+    bottom: 0;
+    z-index: 3;
+    animation: moveGround 3s linear infinite;
+}
+
+/* Animaciones corregidas para que se repitan sin cortes */
+@keyframes moveSky {
+    from { background-position: 0px; }
+    to { background-position: -576px; }
+}
+
+@keyframes moveBackground {
+    from { background-position: 0px; }
+    to { background-position: -576px; }
+}
+
+@keyframes moveGround {
+    from { background-position: 0px; }
+    to { background-position: -576px; }
+}
+
+/* Configuración del personaje */
 #character {
-    background: url(assets/character/Run.png) repeat-x;
+    background: url("assets/character/Run.png") repeat-x;
     height: 128px;
     width: 128px;
-    top: 72px;
+    top: 196px; /* Ajustamos la posición del personaje en el suelo */
     position: relative;
     background-position: 0;
-    /* Configuración del personaje con imagen y posición inicial */
+    z-index: 4;
 }
 
+/* Animación de caminar */
 @keyframes walk {
-    0% {
-        background-position: 0px;
-    }
-
-    100% {
-        background-position: -1280px;
-    }
-
-    /* Animación para mover la imagen del personaje y simular caminata */
+    0% { background-position: 0px; }
+    100% { background-position: -1280px; }
 }
 
 .walking {
     animation: walk 0.5s steps(10) infinite;
-    /* Asigna la animación de caminar */
 }
 
+/* Animación de salto (ajustado para que el personaje salte más alto) */
 @keyframes jump {
-    0% {
-        top: 72px;
-    }
-
-    30% {
-        top: 10px;
-    }
-
-    70% {
-        top: 10px;
-    }
-
-    100% {
-        top: 72px;
-    }
-
-    /* Animación de salto */
+    0% { top: 196px; }
+    30% { top: 90px; } /* El personaje ahora salta más alto */
+    70% { top: 90px; }
+    100% { top: 196px; }
 }
 
 .jumping {
-    animation: jump 0.5s linear;
-    /* Aplica la animación de salto */
+    animation: jump 0.6s linear;
 }
 
+/* Bloque de obstáculo */
 #block {
-    background-image: url(assets/objects/ice_rock2.png);
-    width: 20px;
-    height: 20px;
-    position: relative;
-    top: 52px;
-    left: 500px;
+    width: 30px;
+    height: 30px;
+    background-color: brown;
+    border: 3px solid black;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 5px; /* Ajustado más pegado al suelo */
+    left: 576px;
     animation: block 3s linear infinite;
-    /* Configuración del bloque y su animación de movimiento */
+    z-index: 6;
 }
 
+/* Sombra para el bloque */
+#block::before {
+    content: "";
+    width: 100%;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    border-radius: 5px;
+}
+
+/* Animación del bloque */
 @keyframes block {
-    0% {
-        left: 500px;
-    }
-
-    100% {
-        left: -20px;
-    }
-
-    /* Animación que mueve el bloque de derecha a izquierda */
+    0% { left: 576px; }
+    100% { left: -20px; }
 }

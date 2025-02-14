@@ -109,6 +109,7 @@ body {
 }
 
 /* Bloque de obstáculo */
+/* El bloque empieza sin animación */
 #block {
     width: 30px;
     height: 30px;
@@ -116,9 +117,8 @@ body {
     border: 3px solid black;
     border-radius: 5px;
     position: absolute;
-    bottom: 5px; /* Ajustado más pegado al suelo */
+    bottom: 5px;
     left: 576px;
-    animation: block 3s linear infinite;
     z-index: 6;
 }
 
@@ -160,4 +160,67 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10; /* Para que esté sobre el juego */
+}
+
+/* Pantalla de inicio con la imagen encima */
+#pantallaInicio {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    z-index: 20;
+}
+
+/* Imagen de la máscara */
+#mask {
+    width: 250px; /* Ajusta el tamaño según necesites */
+    height: auto;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 21; /* Asegura que está encima de todo */
+}
+
+/* Botón estilo arcade - más grande y circular */
+#botonInicio {
+    background: radial-gradient(circle, red 30%, darkred 90%);
+    color: white;
+    font-size: 28px; /* Texto más grande */
+    padding: 15px;
+    border: 4px solid black;
+    border-radius: 50%; /* Hace que sea completamente circular */
+    width: 150px; /* Tamaño del botón */
+    height: 150px;
+    cursor: pointer;
+    margin-top: 180px; /* Espacio debajo de la máscara */
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5); /* Efecto de sombra */
+}
+
+/* Efecto de presión en el botón */
+#botonInicio:active {
+    transform: scale(0.9);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Hover para dar sensación de 3D */
+#botonInicio:hover {
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.8);
+    transform: scale(1.1);
 }

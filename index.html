@@ -1,38 +1,27 @@
 <!DOCTYPE html> 
-<!-- Define el tipo de documento como HTML5 -->
 <html lang="es-ES">
-<!-- Inicia el documento HTML y establece el idioma en español de España -->
 
 <head>
     <meta charset="UTF-8">
-    <!-- Define la codificación de caracteres como UTF-8 para admitir caracteres especiales -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Configura la vista para dispositivos móviles -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Enlace al archivo de estilos CSS externo -->
     <title>Taller UT05</title>
-    <!-- Título de la página que aparece en la pestaña del navegador -->
 </head>
 
 <body>
-    <div id="game">
-        <!-- Capas del efecto parallax -->
-        <div id="sky"></div>
-        <!-- Cielo, fondo más lejano -->
-        <div id="background"></div>
-        <!-- Montañas, fondo intermedio -->
-        <div id="ground"></div>
-        <!-- Suelo, fondo más cercano -->
 
-        <!-- Contenedor principal del juego -->
-        <div id="character" class="walking"></div>
-        <!-- Personaje del juego, inicialmente con la clase "walking" -->
-        <div id="block"></div>
-        <!-- Bloque u obstáculo que el personaje debe esquivar -->
+    <div id="cajaPuntuacion">
+        <p>Puntuación: <span id="puntuacion">0</span></p>
     </div>
-    
-    <script src="main.js"></script>
-    <!-- Enlace al archivo de JavaScript que controla la lógica del juego -->
-</body>
 
+    <div id="game">
+        <div id="sky"></div>
+        <div id="background"></div>
+        <div id="ground"></div>
+        <div id="character" class="walking"></div>
+        <div id="block"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
 </html>

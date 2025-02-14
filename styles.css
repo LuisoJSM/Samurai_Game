@@ -8,18 +8,22 @@
 /* Configuración del fondo del juego */
 body {
     background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Hace que el body ocupe toda la pantalla */
+    margin: 0;
 }
 
 /* Contenedor del juego */
 #game {
     position: relative;
-    width: 576px;  /* Ajustado al tamaño de las imágenes */
-    height: 324px; /* Ajustado al tamaño de las imágenes */
-    margin: 10px auto;
-    overflow: hidden;
-    border: 1px solid blue;
+    width: 576px;
+    height: 324px;
     background-color: beige;
+    border: 1px solid blue;
 }
+
 
 /* Capa del cielo (fondo más lejano) */
 #sky {
@@ -134,4 +138,26 @@ body {
 @keyframes block {
     0% { left: 576px; }
     100% { left: -20px; }
+}
+
+
+/* Caja de puntuación encima del juego */
+#cajaPuntuacion {
+    background-color: white;
+    width: 400px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: black;
+    position: absolute;
+    top: 250px; /* Se coloca en la parte superior */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* Para que esté sobre el juego */
 }

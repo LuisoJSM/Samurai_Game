@@ -1,107 +1,158 @@
-var block = document.getElementById("block");
-var character = document.getElementById("character");
-var puntuacion = document.getElementById("puntuacion");
-var pantallaInicio = document.getElementById("pantallaInicio");
-var botonInicio = document.getElementById("botonInicio");
-var counter = 0;
-var juegoIniciado = false;
+//Variables principales del juego
+var character = document.getElementById("character"); // Samurai
+var puntuacion = document.getElementById("puntuacion"); // Donde se muestra la puntuación
+var pantallaInicio = document.getElementById("pantallaInicio"); // Pantalla inicial del juego
+var botonInicio = document.getElementById("botonInicio"); // Botón para iniciar el juego
+var game = document.getElementById("game"); // Contenedor principal del juego
+var counter = 0; // Ppuntuación
+var juegoIniciado = false; // Para saber si el juego ha comenzado
 
-/* 🎵 Sonidos */
-var sonidoFinal = new Audio("assets/sounds/final.wav");
-var soundtrack = new Audio("assets/sounds/soundtrack.wav");
-var insertCoin = new Audio("assets/sounds/insert_coin.mp3");
-var jump1 = new Audio("assets/sounds/jump1.wav");
-var jump2 = new Audio("assets/sounds/jump2.wav");
-var jump3 = new Audio("assets/sounds/jump3.wav");
+/* Sonidos */
+var sonidoFinal = new Audio("assets/sounds/final.wav"); // Sonido de colisión
+var soundtrack = new Audio("assets/sounds/soundtrack.wav"); // Música de fondo
+var insertCoin = new Audio("assets/sounds/insert_coin.mp3"); // Sonido de inicio del juego
+var jump1 = new Audio("assets/sounds/jump1.wav"); // Sonido de salto 1
+var jump2 = new Audio("assets/sounds/jump2.wav"); // Sonido de salto 2
+var jump3 = new Audio("assets/sounds/jump3.wav"); // Sonido de salto 3
 
-soundtrack.loop = true;
-soundtrack.volume = 0.5;
+soundtrack.loop = true; // repetir música de fondo
+soundtrack.volume = 0.5; // Ajustar volumen música de fondo
 
-/* 🏆 Función para actualizar la puntuación */
+/* Función para actualizar la puntuación */
 function cambiarPuntuacion(valor) {
     puntuacion.innerHTML = valor;
 }
 
-/* 🎲 Generar sonido aleatorio */
+/* Función para generar número aleatorio */
 function generarAleatorio(callback) {
     var numero = Math.floor(Math.random() * 3) + 1;
     callback(numero);
 }
 
-/* 🔊 Seleccionar sonido de salto */
+/* Función para elegir uno de los sonidos de salto */
 function resolverSonido(numero) {
-    let sonidos = [jump1, jump2, jump3];
-    sonidos[numero - 1].currentTime = 0;
-    sonidos[numero - 1].play();
+    
+    if (numero === 1) {
+        jump1.currentTime = 0;
+        jump1.play();
+    } else if (numero===2) {
+        jump2.currentTime = 0;
+        jump2.play();
+    } else {
+        jump3.currentTime = 0;
+        jump3.play();
+    }
+
 }
 
-/* 🦘 Función para hacer saltar al personaje */
+
+
+/* Función para que el personaje salte */
 function jump() {
     if (!juegoIniciado) return;
     if (!character.classList.contains("jumping")) {
         character.classList.add("jumping");
-        generarAleatorio(resolverSonido);
-        setTimeout(() => character.classList.remove("jumping"), 700);
+        generarAleatorio(resolverSonido); // Genero sonido aleatorio
+        setTimeout(() => character.classList.remove("jumping"), 700); // Quita la animación del salto después de 700ms
     }
 }
 
-/* 🚀 Aumentar velocidad del juego */
+/* Función para aumentar velocidad del juego */
 function aumentarDificultad() {
-    let nuevaDuracion = Math.max(1.5, 3 - counter / 1000); // Velocidad mínima de 1.5s
-    block.style.animation = `block ${nuevaDuracion}s linear infinite`;
+    return Math.max(1.5, 3 - counter / 1000); //Reduzo la duración dde la animación del bloque
 }
 
-/* ⚡ Reiniciar el juego tras perder */
-function reiniciarJuego() {
-    block.style.animation = "none";
-    block.offsetHeight;  // Forzar reflow
-    block.style.animation = "block 3s linear infinite";
-}
+/* Función generar bloque aleatorio */
+function generarBloque() {
+    if (!juegoIniciado) return;
 
-/* 🚧 Generar obstáculos aleatorios */
-function cambiarObstaculo() {
+    let block = document.createElement("div");
+    block.classList.add("block");
+    game.appendChild(block);
+
+    // Aquí se genera la altura aleatoria
     let alturas = ["30px", "50px", "70px"];
-    let aleatorio = Math.floor(Math.random() * alturas.length);
-    block.style.height = alturas[aleatorio];
+    let aleatorioAltura = Math.floor(Math.random() * alturas.length);
+    block.style.height = alturas[aleatorioAltura];
+
+    // Animo el bloque con velocidad creciente
+    let duracion = aumentarDificultad();
+    block.style.animation = `block ${duracion}s linear infinite`;
+
+    // Eliminar bloque cuando salga de pantalla
+    block.addEventListener("animationiteration", () => {
+        block.remove();
+    });
+
+    // Volver a generar otro bloque con un intervalo aleatorio
+    let tiempoSiguiente = Math.random() * 1500 + 500;
+    setTimeout(generarBloque, tiempoSiguiente);
 }
 
-/* ▶️ Iniciar el juego */
+/* Función para Iniciar el juego */
 function iniciarJuego() {
     insertCoin.play();
     if (juegoIniciado) return;
     juegoIniciado = true;
     pantallaInicio.style.display = "none";
     soundtrack.play();
-    reiniciarJuego();
+    counter = 0;
+    cambiarPuntuacion(0);
+
+    // Inicio la generación de bloques
+    generarBloque();
 }
 
-/* 🔥 Comprobar colisión */
+
+
+/* Reiniciar juego después de colisionar */
+function reiniciarJuego() {
+    juegoIniciado = false;
+    
+    //Detener la música
+    soundtrack.pause();
+    soundtrack.currentTime = 0;
+
+    //Eliminar todos los bloques
+    document.querySelectorAll(".block").forEach(block => block.remove());
+
+    //Reiniciar la puntuación
+    counter = 0;
+    cambiarPuntuacion(0);
+
+    //Volver a mostrar la pantalla de inicio
+    pantallaInicio.style.display = "flex";
+}
+
+
+
+/* Comprobar colisión */
 var checkDead = setInterval(function () {
     if (!juegoIniciado) return;
 
     let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-    let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+    let bloques = document.getElementsByClassName("block");
 
-    if (blockLeft < 65 && blockLeft > 30 && characterTop >= 170) {
-        block.style.animation = "none";
-        juegoIniciado = false;
-        soundtrack.pause();
-        soundtrack.currentTime = 0;
-        sonidoFinal.play().then(() => {
-            alert("Game Over. Score: " + Math.floor(counter / 100));
-            counter = 0;
-            cambiarPuntuacion(0);
-            reiniciarJuego();
-        });
-    } else {
-        counter++;
-        cambiarPuntuacion(Math.floor(counter / 100));
-        aumentarDificultad(); // Se ajusta la velocidad del juego
-        if (counter % 500 === 0) cambiarObstaculo(); // Cambia obstáculos cada 500 puntos
+    for (let block of bloques) {
+        let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+
+        if (blockLeft < 65 && blockLeft > 30 && characterTop >= 170) {
+            juegoIniciado = false;
+            soundtrack.pause();
+            soundtrack.currentTime = 0;
+            sonidoFinal.play().then(() => {
+                alert("Game Over. Score: " + Math.floor(counter / 100));
+                reiniciarJuego();
+            });
+            return;
+        }
     }
+
+    counter++;
+    cambiarPuntuacion(Math.floor(counter / 100));
 }, 10);
 
-/* 🎮 Detectar eventos */
+/* Detectar espacio */
 botonInicio.addEventListener("click", iniciarJuego);
 document.body.addEventListener("keydown", (k) => {
     if (k.code === "Space") {

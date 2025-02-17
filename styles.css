@@ -1,11 +1,11 @@
-/* 🔄 Reset de estilos */
+
 * {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
 }
 
-/* 🎮 Configuración del fondo */
+/* Configuración del fondo */
 body {
     background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
     display: flex;
@@ -15,7 +15,7 @@ body {
     margin: 0;
 }
 
-/* 🎮 Contenedor del juego */
+/* Contenedor principal del juego */
 #game {
     position: relative;
     width: 576px;
@@ -24,7 +24,9 @@ body {
     border: 1px solid blue;
 }
 
-/* ☁️ Capas del fondo */
+/* Capas del fondo */
+
+/* Cielo */
 #sky {
     position: absolute;
     width: 100%;
@@ -35,6 +37,7 @@ body {
     animation: moveSky 20s linear infinite;
 }
 
+/* Fondo */
 #background {
     position: absolute;
     width: 100%;
@@ -45,6 +48,7 @@ body {
     animation: moveBackground 10s linear infinite;
 }
 
+/* Suelo */
 #ground {
     position: absolute;
     width: 100%;
@@ -56,23 +60,24 @@ body {
     animation: moveGround 3s linear infinite;
 }
 
-/* 🔄 Animaciones de movimiento */
+/* Animaciones de movimiento */
+/* Mover cielo */
 @keyframes moveSky {
     from { background-position: 0px; }
     to { background-position: -576px; }
 }
-
+/* Mover Fondo */
 @keyframes moveBackground {
     from { background-position: 0px; }
     to { background-position: -576px; }
 }
-
+/* Mover Suelo */
 @keyframes moveGround {
     from { background-position: 0px; }
     to { background-position: -576px; }
 }
 
-/* 🏃‍♂️ Configuración del personaje */
+/* Personaje */
 #character {
     background: url("assets/character/Run.png") repeat-x;
     height: 128px;
@@ -83,7 +88,7 @@ body {
     z-index: 4;
 }
 
-/* 🏃‍♂️ Animación de caminar */
+/* Caminar */
 @keyframes walk {
     0% { background-position: 0px; }
     100% { background-position: -1280px; }
@@ -93,21 +98,21 @@ body {
     animation: walk 0.5s steps(10) infinite;
 }
 
-/* 🦘 Nueva animación de salto */
+/* Saltar */
 @keyframes jump {
     0% { top: 196px; }
-    25% { top: 90px; }  /* 📌 Sube más alto */
-    50% { top: 80px; }  /* 📌 Mantiene más tiempo en el aire */
+    25% { top: 90px; } 
+    50% { top: 80px; }
     75% { top: 90px; }
     100% { top: 196px; }
 }
 
 .jumping {
-    animation: jump 0.7s ease-in-out; /* 📌 Suavizado del salto */
+    animation: jump 0.7s ease-in-out;
 }
 
-/* 🚧 Bloque de obstáculo */
-#block {
+/* Bloques */
+.block {
     width: 30px;
     height: 30px;
     background-color: brown;
@@ -117,28 +122,16 @@ body {
     bottom: 5px;
     left: 576px;
     z-index: 6;
-    animation: block 3s linear infinite;
 }
 
-/* 🚧 Sombra del bloque */
-#block::before {
-    content: "";
-    width: 100%;
-    height: 5px;
-    background: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    border-radius: 5px;
-}
 
-/* 🚀 Animación del obstáculo en movimiento */
+/* Animaci´`on del bloque */
 @keyframes block {
     0% { left: 576px; }
     100% { left: -20px; }
 }
 
-/* 🏆 Puntuación */
+/* Caja de puntuación */
 #cajaPuntuacion {
     background-color: white;
     width: 400px;
@@ -159,7 +152,7 @@ body {
     z-index: 10;
 }
 
-/* 🖥 Pantalla de inicio */
+/* Pantalla de inicio */
 #pantallaInicio {
     position: fixed;
     top: 0;
@@ -177,7 +170,7 @@ body {
     z-index: 20;
 }
 
-/* 🎭 Imagen de máscara */
+/* Máscara Japonesa */
 #mask {
     width: 250px;
     height: auto;
@@ -189,14 +182,14 @@ body {
     animation: maskFlotar 3s infinite ease-in-out;
 }
 
-/* 🎭 Animación de la máscara */
+/* Animación de la máscara */
 @keyframes maskFlotar {
     0% { transform: translateX(-50%) translateY(0px); }
     50% { transform: translateX(-50%) translateY(-10px); }
     100% { transform: translateX(-50%) translateY(0px); }
 }
 
-/* 🔴 Botón de inicio */
+/* Botón Arcade de inicio */
 #botonInicio {
     background: radial-gradient(circle, red 30%, darkred 90%);
     color: white;
@@ -218,13 +211,13 @@ body {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* 🎮 Efecto de presión en el botón */
+/* Efecto cuando se presiona el botón */
 #botonInicio:active {
     transform: scale(0.9);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
 }
 
-/* 🔥 Hover 3D en el botón */
+/* Efecto de Hover sobre botón */
 #botonInicio:hover {
     box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.8);
     transform: scale(1.1);

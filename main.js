@@ -4,123 +4,105 @@ var puntuacion = document.getElementById("puntuacion");
 var pantallaInicio = document.getElementById("pantallaInicio");
 var botonInicio = document.getElementById("botonInicio");
 var counter = 0;
-var juegoIniciado = false; // Variable para controlar si el juego ha empezado
+var juegoIniciado = false;
 
-/* Cargamos los sonidos */
-var sonidoFinal = new Audio("assets/sounds/final.wav");  // Sonido cuando se choca el personaje
-var soundtrack = new Audio("assets/sounds/soundtrack.wav"); // Música de fondo
-var insertCoin = new Audio("assets/sounds/insert_coin.mp3"); // Sonido insertar moneda
-var jump1 = new Audio("assets/sounds/jump1.wav"); // Sonido salto 1
-var jump2 = new Audio("assets/sounds/jump2.wav"); // Sonido salto 2
-var jump3 = new Audio("assets/sounds/jump3.wav"); // Sonido salto 3
+/* 🎵 Sonidos */
+var sonidoFinal = new Audio("assets/sounds/final.wav");
+var soundtrack = new Audio("assets/sounds/soundtrack.wav");
+var insertCoin = new Audio("assets/sounds/insert_coin.mp3");
+var jump1 = new Audio("assets/sounds/jump1.wav");
+var jump2 = new Audio("assets/sounds/jump2.wav");
+var jump3 = new Audio("assets/sounds/jump3.wav");
 
-/* Configuración de la música de fondo */
 soundtrack.loop = true;
 soundtrack.volume = 0.5;
 
-/* Función para actualizar la puntuación en el HTML */
+/* 🏆 Función para actualizar la puntuación */
 function cambiarPuntuacion(valor) {
     puntuacion.innerHTML = valor;
 }
 
-/* Función para generar un número aleatorio y alternar los sonidos de los saltos */
+/* 🎲 Generar sonido aleatorio */
 function generarAleatorio(callback) {
-    var numero = Math.floor(Math.random() * 3) + 1; // Genera un número entre 1 y 3
+    var numero = Math.floor(Math.random() * 3) + 1;
     callback(numero);
 }
 
-/* Función callback que le paso a generarAleatorio */
+/* 🔊 Seleccionar sonido de salto */
 function resolverSonido(numero) {
-    if (numero === 1) {
-        jump1.currentTime = 0;
-        jump1.play();
-    } else if (numero === 2) {
-        jump2.currentTime = 0;
-        jump2.play();
-    } else if (numero === 3) {
-        jump3.currentTime = 0;
-        jump3.play();
-    }
+    let sonidos = [jump1, jump2, jump3];
+    sonidos[numero - 1].currentTime = 0;
+    sonidos[numero - 1].play();
 }
 
-/* Función para los saltos del personaje */
+/* 🦘 Función para hacer saltar al personaje */
 function jump() {
-    if (!juegoIniciado) return; // No se puede saltar si el juego no ha empezado
-
+    if (!juegoIniciado) return;
     if (!character.classList.contains("jumping")) {
         character.classList.add("jumping");
-
-        generarAleatorio(resolverSonido); // Genera sonidos aleatorios
-
-        setTimeout(function () {
-            character.classList.remove("jumping");
-        }, 600);
+        generarAleatorio(resolverSonido);
+        setTimeout(() => character.classList.remove("jumping"), 700);
     }
 }
 
-/* Función para iniciar el juego */
+/* 🚀 Aumentar velocidad del juego */
+function aumentarDificultad() {
+    let nuevaDuracion = Math.max(1.5, 3 - counter / 1000); // Velocidad mínima de 1.5s
+    block.style.animation = `block ${nuevaDuracion}s linear infinite`;
+}
+
+/* ⚡ Reiniciar el juego tras perder */
+function reiniciarJuego() {
+    block.style.animation = "none";
+    block.offsetHeight;  // Forzar reflow
+    block.style.animation = "block 3s linear infinite";
+}
+
+/* 🚧 Generar obstáculos aleatorios */
+function cambiarObstaculo() {
+    let alturas = ["30px", "50px", "70px"];
+    let aleatorio = Math.floor(Math.random() * alturas.length);
+    block.style.height = alturas[aleatorio];
+}
+
+/* ▶️ Iniciar el juego */
 function iniciarJuego() {
     insertCoin.play();
-    if (juegoIniciado) return; // Evita que el juego se inicie varias veces
-
-    juegoIniciado = true; // Ahora el juego ha comenzado
-    pantallaInicio.style.display = "none"; // Oculta la pantalla de inicio
+    if (juegoIniciado) return;
+    juegoIniciado = true;
+    pantallaInicio.style.display = "none";
     soundtrack.play();
-    block.style.animation = "block 3s linear infinite"; // Activa el movimiento del obstáculo
+    reiniciarJuego();
 }
 
-/* Colisión */
-// Se crea un intervalo que ejecutará la función cada 10 milisegundos (controla colisiones y la puntuación).
+/* 🔥 Comprobar colisión */
 var checkDead = setInterval(function () {
-    // Si el juego no ha comenzado (`juegoIniciado` es `false`), no hace nada y se detiene aquí.
     if (!juegoIniciado) return;
 
-    // Obtiene la posición vertical (top) actual del personaje en píxeles.
     let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-
-    // Obtiene la posición horizontal (left) actual del obstáculo en píxeles.
     let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
 
-    // Verifica si el personaje ha chocado con el obstáculo.
-    // Esto ocurre cuando:
-    // - El bloque está entre `30px` y `65px` de `left` (zona de colisión horizontal).
-    // - El personaje está a una altura mayor o igual a `170px` (zona de colisión vertical, es decir, no está saltando lo suficiente).
     if (blockLeft < 65 && blockLeft > 30 && characterTop >= 170) {
-        // Detiene la animación del obstáculo para que se quede quieto cuando el jugador pierde.
         block.style.animation = "none";
-
-        // Cambia `juegoIniciado` a `false`, deteniendo la detección de colisiones y la puntuación.
         juegoIniciado = false;
-
-        // Detiene la música de fondo y la reinicia para que cuando se vuelva a jugar empiece desde el inicio.
         soundtrack.pause();
         soundtrack.currentTime = 0;
-
-        // Reinicia el sonido final y lo reproduce.
-        sonidoFinal.currentTime = 0;
         sonidoFinal.play().then(() => {
-            // Muestra una alerta con el mensaje de "Game Over" y la puntuación actual del jugador.
             alert("Game Over. Score: " + Math.floor(counter / 100));
-
-            // Reinicia el contador de puntuación a 0.
             counter = 0;
-
-            // Actualiza la puntuación en la pantalla, mostrándola como 0.
             cambiarPuntuacion(0);
+            reiniciarJuego();
         });
     } else {
-        // Si el jugador no ha chocado con el obstáculo, incrementa la puntuación.
         counter++;
-
-        // Convierte la puntuación en un número redondeado y la actualiza en la pantalla.
         cambiarPuntuacion(Math.floor(counter / 100));
+        aumentarDificultad(); // Se ajusta la velocidad del juego
+        if (counter % 500 === 0) cambiarObstaculo(); // Cambia obstáculos cada 500 puntos
     }
-}, 10); // Esta función se ejecuta cada 10ms para detectar colisiones y actualizar la puntuación.
+}, 10);
 
-/* Detectar clic en el botón de inicio */
+/* 🎮 Detectar eventos */
 botonInicio.addEventListener("click", iniciarJuego);
-
-/* Detectar tecla para iniciar el juego o saltar */
 document.body.addEventListener("keydown", (k) => {
     if (k.code === "Space") {
         if (!juegoIniciado) {

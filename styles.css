@@ -1,11 +1,11 @@
-/* Reset de estilos básicos */
+/* 🔄 Reset de estilos */
 * {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
 }
 
-/* Configuración del fondo del juego */
+/* 🎮 Configuración del fondo */
 body {
     background: linear-gradient(90deg, rgba(0, 4, 83, 1) 0%, rgba(2, 0, 36, 1) 10%, rgba(0, 117, 255, 1) 45%, rgba(0, 117, 255, 1) 55%, rgba(2, 0, 36, 1) 90%, rgba(0, 4, 83, 1) 100%);
     display: flex;
@@ -15,7 +15,7 @@ body {
     margin: 0;
 }
 
-/* Contenedor del juego */
+/* 🎮 Contenedor del juego */
 #game {
     position: relative;
     width: 576px;
@@ -24,7 +24,7 @@ body {
     border: 1px solid blue;
 }
 
-/* Capa del cielo (fondo más lejano) */
+/* ☁️ Capas del fondo */
 #sky {
     position: absolute;
     width: 100%;
@@ -35,7 +35,6 @@ body {
     animation: moveSky 20s linear infinite;
 }
 
-/* Capa de montañas */
 #background {
     position: absolute;
     width: 100%;
@@ -46,7 +45,6 @@ body {
     animation: moveBackground 10s linear infinite;
 }
 
-/* Capa del suelo */
 #ground {
     position: absolute;
     width: 100%;
@@ -58,38 +56,23 @@ body {
     animation: moveGround 3s linear infinite;
 }
 
-/* Animaciones corregidas para que se repitan sin cortes */
+/* 🔄 Animaciones de movimiento */
 @keyframes moveSky {
-    from {
-        background-position: 0px;
-    }
-
-    to {
-        background-position: -576px;
-    }
+    from { background-position: 0px; }
+    to { background-position: -576px; }
 }
 
 @keyframes moveBackground {
-    from {
-        background-position: 0px;
-    }
-
-    to {
-        background-position: -576px;
-    }
+    from { background-position: 0px; }
+    to { background-position: -576px; }
 }
 
 @keyframes moveGround {
-    from {
-        background-position: 0px;
-    }
-
-    to {
-        background-position: -576px;
-    }
+    from { background-position: 0px; }
+    to { background-position: -576px; }
 }
 
-/* Configuración del personaje */
+/* 🏃‍♂️ Configuración del personaje */
 #character {
     background: url("assets/character/Run.png") repeat-x;
     height: 128px;
@@ -100,45 +83,30 @@ body {
     z-index: 4;
 }
 
-/* Animación de caminar */
+/* 🏃‍♂️ Animación de caminar */
 @keyframes walk {
-    0% {
-        background-position: 0px;
-    }
-
-    100% {
-        background-position: -1280px;
-    }
+    0% { background-position: 0px; }
+    100% { background-position: -1280px; }
 }
 
 .walking {
     animation: walk 0.5s steps(10) infinite;
 }
 
-/* Animación de salto */
+/* 🦘 Nueva animación de salto */
 @keyframes jump {
-    0% {
-        top: 196px;
-    }
-
-    30% {
-        top: 90px;
-    }
-
-    70% {
-        top: 90px;
-    }
-
-    100% {
-        top: 196px;
-    }
+    0% { top: 196px; }
+    25% { top: 90px; }  /* 📌 Sube más alto */
+    50% { top: 80px; }  /* 📌 Mantiene más tiempo en el aire */
+    75% { top: 90px; }
+    100% { top: 196px; }
 }
 
 .jumping {
-    animation: jump 0.6s linear;
+    animation: jump 0.7s ease-in-out; /* 📌 Suavizado del salto */
 }
 
-/* Bloque de obstáculo - Animación original sin aleatoriedad */
+/* 🚧 Bloque de obstáculo */
 #block {
     width: 30px;
     height: 30px;
@@ -152,7 +120,7 @@ body {
     animation: block 3s linear infinite;
 }
 
-/* Sombra para el bloque */
+/* 🚧 Sombra del bloque */
 #block::before {
     content: "";
     width: 100%;
@@ -164,18 +132,13 @@ body {
     border-radius: 5px;
 }
 
-/* Animación del bloque en movimiento */
+/* 🚀 Animación del obstáculo en movimiento */
 @keyframes block {
-    0% {
-        left: 576px;
-    }
-
-    100% {
-        left: -20px;
-    }
+    0% { left: 576px; }
+    100% { left: -20px; }
 }
 
-/* Caja de puntuación encima del juego */
+/* 🏆 Puntuación */
 #cajaPuntuacion {
     background-color: white;
     width: 400px;
@@ -196,7 +159,7 @@ body {
     z-index: 10;
 }
 
-/* Pantalla de inicio con la imagen encima */
+/* 🖥 Pantalla de inicio */
 #pantallaInicio {
     position: fixed;
     top: 0;
@@ -214,18 +177,26 @@ body {
     z-index: 20;
 }
 
-/* Imagen de la máscara */
+/* 🎭 Imagen de máscara */
 #mask {
     width: 250px;
     height: auto;
     position: absolute;
-    top: 15%;
+    top: 20%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 21;
+    animation: maskFlotar 3s infinite ease-in-out;
 }
 
-/* Botón estilo arcade - Circular */
+/* 🎭 Animación de la máscara */
+@keyframes maskFlotar {
+    0% { transform: translateX(-50%) translateY(0px); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+    100% { transform: translateX(-50%) translateY(0px); }
+}
+
+/* 🔴 Botón de inicio */
 #botonInicio {
     background: radial-gradient(circle, red 30%, darkred 90%);
     color: white;
@@ -247,41 +218,14 @@ body {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Efecto de presión en el botón */
+/* 🎮 Efecto de presión en el botón */
 #botonInicio:active {
     transform: scale(0.9);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
 }
 
-/* Hover para dar sensación de 3D */
+/* 🔥 Hover 3D en el botón */
 #botonInicio:hover {
     box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.8);
     transform: scale(1.1);
-}
-
-/* Animación de la máscara */
-#mask {
-    width: 250px;
-    height: auto;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 21;
-    animation: maskFlotar 3s infinite ease-in-out;
-}
-
-/* Animación de movimiento suave arriba y abajo */
-@keyframes maskFlotar {
-    0% {
-        transform: translateX(-50%) translateY(0px);
-    }
-
-    50% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-
-    100% {
-        transform: translateX(-50%) translateY(0px);
-    }
 }

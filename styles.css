@@ -225,6 +225,10 @@ body {
 
 
 #pantallaGameOver {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    color: red;
+    text-shadow: 3px 3px 0px black, -3px -3px 0px black;
     position: fixed;
     top: 0;
     left: 0;
@@ -235,28 +239,130 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-family: Arial, sans-serif;
     text-align: center;
     z-index: 25;
 }
 
-#pantallaGameOver p {
-    font-size: 28px;
-    margin: 10px 0;
+
+
+#pantallaGameOver p:first-child {
+    font-size: 40px; /* Tamaño grande para destacar */
+    color: red;
+    text-shadow: 5px 5px 0px black, -5px -5px 0px black;
+    margin-bottom: 20px;
 }
+
+
+
+#pantallaGameOver p {
+    font-size: 20px;
+    margin: 15px 0;
+    color: yellow;
+    text-shadow: 2px 2px 0px black, -2px -2px 0px black;
+}
+
+
 
 #botonReiniciar {
-    background: red;
+    background: radial-gradient(circle, red 30%, darkred 90%);
     color: white;
-    font-size: 22px;
-    padding: 10px 20px;
-    border: none;
+    font-size: 22px; /* Reducido un poco para que no se corte */
+    padding: 15px;
+    border: 4px solid black;
+    border-radius: 50%;
+    width: 140px; /* Tamaño corregido */
+    height: 140px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 40px; /* Ajuste de separación */
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-#botonReiniciar:hover {
-    background: darkred;
+/* Efecto cuando se presiona el botón */
+#botonReiniciar:active {
+    transform: scale(0.9);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
 }
+
+/* Efecto de Hover sobre botón */
+#botonReiniciar:hover {
+    box-shadow: 0px 8px 20px rgba(255, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+
+
+#demon {
+    width: 200px; /* Tamaño adecuado */
+    height: auto;
+    position: absolute;
+    top: 10%; /* Ajuste más centrado */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    margin-bottom: 20px; /* Espacio con "Game Over" */
+    animation: maskFlotar 3s infinite ease-in-out; /* Mantiene el efecto flotante */
+}
+
+
+/* Contenedor Principal */
+#contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh; /* Para mantener el juego centrado */
+    position: relative;
+}
+
+/* Estilos para el footer */
+
+#licencia {
+    width: 100%;
+    text-align: center;
+    font-size: 9px;
+    color: #FFD700; /* Color dorado */
+    margin-top: 30px;
+    padding: 15px 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Press Start 2P', cursive; /* Fuente arcade */
+    text-shadow: 3px 3px 0px black, -3px -3px 0px black;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    border-radius: 10px;
+}
+
+/* Estilos para los enlaces del footer */
+#licencia a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+#licencia a:hover {
+    text-decoration: underline;
+    color: #FF4500; /* Rojo fuego */
+}
+
+/* Iconos de licencia */
+#licencia img {
+    height: 20px;
+    vertical-align: middle;
+    filter: drop-shadow(2px 2px 2px black); /* Sombra para mejor visibilidad */
+    transition: transform 0.2s ease-in-out;
+}
+
+#licencia img:hover {
+    transform: scale(1.1);
+}
+
+
+

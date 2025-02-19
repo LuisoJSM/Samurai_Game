@@ -16,6 +16,7 @@ var insertCoin = new Audio("assets/sounds/insert_coin.mp3"); // Sonido de inicio
 var jump1 = new Audio("assets/sounds/jump1.wav"); // Sonido de salto 1
 var jump2 = new Audio("assets/sounds/jump2.wav"); // Sonido de salto 2
 var jump3 = new Audio("assets/sounds/jump3.wav"); // Sonido de salto 3
+var gameOver = new Audio("assets/sounds/game_over.wav"); //Sonido game over
 
 soundtrack.loop = true; // repetir música de fondo
 soundtrack.volume = 0.5; // Ajustar volumen música de fondo
@@ -113,15 +114,14 @@ function reiniciarJuego() {
     document.getElementById("background").style.animation = "";
     document.getElementById("ground").style.animation = "";
 
-    // **No mostrar pantalla de inicio, sino iniciar directamente**
-    pantallaInicio.style.display = "none"; // Asegurar que sigue oculta
+    //Me aseguro que no sale la pantalla de inicio
+    pantallaInicio.style.display = "none"; 
     clearInterval(checkDead);
     
-    // **Iniciar el juego inmediatamente**
+   
     iniciarJuego();
 }
 
-/* Función para detectar colisión */
 function detectarColision() {
     if (!juegoIniciado) return;
 
@@ -136,13 +136,22 @@ function detectarColision() {
             soundtrack.pause();
             soundtrack.currentTime = 0;
 
-            // **Actualizar la puntuación final antes de mostrar Game Over**
+            // Reproducir sonido de colisión
+            sonidoFinal.currentTime = 0; 
+            sonidoFinal.play().catch(error => console.log("Error al reproducir sonido:", error));
+
+            gameOver.currentTime = 0;
+            gameOver.play().catch(error => console.log("Error al reproducir sonido:", error));
+
+            //Puntuaciñon pantalla gfame over
             document.getElementById("puntuacionFinal").innerText = Math.floor(counter / 100);
 
-            // Mostrar pantalla de Game Over
-            pantallaGameOver.style.display = "flex";
+            // Mostrar pantalla de Game Over después de que el sonido comienza
+            setTimeout(() => {
+                pantallaGameOver.style.display = "flex";
+            }, 100);
 
-            // **Parar completamente el juego**
+            // Parar completamente el juego
             clearInterval(checkDead);
             document.querySelectorAll(".block").forEach(block => {
                 block.style.animation = "none"; // Pausar bloques
@@ -162,6 +171,8 @@ function detectarColision() {
 }
 
 
+
+
 var checkDead = setInterval(detectarColision, 10);
 
 botonInicio.addEventListener("click", iniciarJuego);
@@ -171,10 +182,15 @@ botonReiniciar.addEventListener("click", () => {
 });
 document.body.addEventListener("keydown", (k) => {
     if (k.code === "Space") {
-        if (!juegoIniciado) {
-            iniciarJuego();
+        // Añadido para reiniciar el juego si la pantalla está en Game Over
+        if (pantallaGameOver.style.display === "flex") {
+            reiniciarJuego();
         } else {
-            jump();
+            if (!juegoIniciado) {
+                iniciarJuego();
+            } else {
+                jump();
+            }
         }
     }
 });

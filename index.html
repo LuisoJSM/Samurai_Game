@@ -5,39 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Taller UT05</title>
+    <title>Samurai Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
+    <div id="contenedor">
+        <!-- Pantalla Game Over -->
+        <div id="pantallaGameOver">
+            <img id="demon" src="assets/pantalla/demon.png" alt="Mascara demonio japonés">
+            <p>Game Over</p>
+            <p>Puntuación: <span id="puntuacionFinal">0</span></p>
+            <button id="botonReiniciar">Reiniciar</button>
+        </div>
 
-    <div id="pantallaGameOver">
-        <p>Game Over</p>
-        <p>Puntuación: <span id="puntuacionFinal">0</span></p>
-        <button id="botonReiniciar">Reiniciar</button>
-    </div>
-    
+        <!-- Pantalla de inicio con la imagen y el botón -->
+        <div id="pantallaInicio">
+            <img id="mask" src="assets/pantalla/mask.png" alt="Mascara inicio">
+            <button id="botonInicio">¡Jugar!</button>
+        </div>
 
+        <div id="cajaPuntuacion">
+            <p>Puntuación: <span id="puntuacion">0</span></p>
+        </div>
 
-    <!-- Pantalla de inicio con la imagen y el botón -->
-    <div id="pantallaInicio">
-        <img id="mask" src="assets/pantalla/mask.png" alt="Mascara inicio">
-        <button id="botonInicio">¡Jugar!</button>
-    </div>
-
-    <div id="cajaPuntuacion">
-        <p>Puntuación: <span id="puntuacion">0</span></p>
-    </div>
-
-    <div id="game">
-        <div id="sky"></div>
-        <div id="background"></div>
-        <div id="ground"></div>
-        <div id="character" class="walking"></div>
-        <div id="block"></div>
+        <div id="game">
+            <div id="sky"></div>
+            <div id="background"></div>
+            <div id="ground"></div>
+            <div id="character" class="walking"></div>
+            <div id="block"></div>
+        </div>
     </div>
 
     <script src="main.js"></script>
+
+    <!-- Footer -->
+    <footer id="licencia">
+        <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+            <a property="dct:title" rel="cc:attributionURL" href="https://github.com/LuisoJSM/Samurai_Game">
+                Samurai Game
+            </a> by 
+            <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/LuisoJSM">
+                Luis José Soriano Moreno
+            </a> 
+            is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" 
+               rel="license noopener noreferrer" style="display:inline-block;">
+                Creative Commons Attribution-NonCommercial 4.0 International
+                <img style="height:22px; margin-left:3px; vertical-align:text-bottom;" 
+                     src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="CC">
+                <img style="height:22px; margin-left:3px; vertical-align:text-bottom;" 
+                     src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="BY">
+                <img style="height:22px; margin-left:3px; vertical-align:text-bottom;" 
+                     src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt="NC">
+            </a>
+        </p>
+    </footer>
+
 </body>
-
-
 </html>
